@@ -64,10 +64,10 @@ def analysis_number(c):
     for i in range(1,c):
         if c%i==0:
             divisors.append(i)
+    even=0
+    odd=0
+    sum_divisors=0
     for i in (divisors):
-        even=0
-        odd=0
-        sum_divisors=0
         number_divisors=len(divisors)
         if i%2==1:
             odd+=1
