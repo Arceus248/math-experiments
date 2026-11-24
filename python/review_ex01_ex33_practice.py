@@ -83,3 +83,83 @@
 # ==============================================================================
 
 # 请在下方开始编写你的代码：
+from sys import argv
+from os.path import exists 
+script,user_name,report_file=argv
+print(f"你好{user_name}，目标报告文件{report_file},是否已存在: {exists(report_file)}")
+print('请输入一组用空格隔开的整数:')
+promt=('>')
+numss=input(promt).split(' ')
+numbers=[]
+for i in (numss):
+    numbers.append(int(i))
+def analyze_stats(nums):
+    total=0
+    max_val=numbers[0]
+    min_val=numbers[0]
+    for i in (numbers):
+        total+=i
+        if max_val>=i:
+            max_val=max_val
+        else:
+            max_val=i
+        if min_val<=i:
+            min_val=min_val
+        else:
+            min_val=i
+    avg=round(total/len(numbers),2)
+    return  total,avg,max_val,min_val
+def is_prime(n):
+    if n<=1:
+        return False
+    for d in range(2,n):
+        if n%d==0:
+            return False
+    return True
+def classify_numbers(nums):
+    primes = []
+    div_3_and_5 = []
+    evens = []
+    for i in nums:
+        if is_prime(i)==True:
+            primes.append(i)
+        if i%3==0 and i%5==0:
+            div_3_and_5.append(i)
+        if i%2==0:
+            evens.append(i)
+    return sorted(primes),sorted(div_3_and_5),sorted(evens)
+total,avg,max_val,min_val=analyze_stats(numbers)
+primes,div_3_and_div_5,evens=classify_numbers(numbers)
+out_file=open(report_file,'w')
+out_file.write(f'''=== 数学分析报告 (操作员: {user_name}) ===
+    原始数据: {numbers}
+    数量: {len(numbers)} | 总和: {total} | 平均值: {avg}
+    最大值: {max_val} | 最小值: {min_val}
+    质数列表(升序): {primes}
+    同时被 3 和 5 整除(升序): {div_3_and_div_5}
+    偶数列表(升序): {evens}''')
+out_file.close()
+op=open(report_file)
+re=op.read()
+op.seek(0)
+rl=op.readline()
+op.close()
+print(f'''报告已写入{report_file}，共{len(report_file)}个字符。
+ --- 文件内容校验 ---
+{re}
+--- 倒带读取第 1 行 ---
+{rl}''')
+
+
+     
+
+
+    
+
+
+
+
+
+
+
+
